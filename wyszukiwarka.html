@@ -1,0 +1,268 @@
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>Wyszukiwarka</title>
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="assets/img/logo.jpg">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="assets/css/responsive.css">
+
+</head>
+<body>	
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="index.html">
+								<img src="assets/img/logo.jpg" alt="" width="100px">
+							</a>
+						</div>
+						<!-- logo -->
+
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li><a href="index.html">Strona główna</a></li>
+								<li><a href="#">Książki</a>
+									<ul class="sub-menu">
+										<li><a href="wypozyczone.html">Wypożyczone</a></li>
+										<li><a href="dostepne.html">Dostępne</a></li>
+									</ul>
+								</li>
+								<li><a href="#">Logowanie</a>
+									<ul class="sub-menu">
+										<li><a href="logowanie_studenta.html">Strefa studenta</a></li>
+										<li><a href="logowanie_pracownika.html">Strefa pracownika</a></li>
+									</ul>
+								</li>
+								<li><a href="kontakt.html">Kontakt</a></li>
+								<li>
+									<div class="header-icons">
+										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+									</div>
+								</li>
+							</ul>
+						</nav>
+						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+	
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+						<?php
+							print '<h3>Wyszukaj:</h3>';
+							print '<form method="post">';
+							print '<input type="text" name="szukaj" placeholder="Wpisz tutaj frazę">';
+							print '<button name ="submit" type="submit">Szukaj <i></i></button>';
+							print '</form>';
+							if (isset ($_POST['submit'])) {
+								$szukaj = $_POST['szukaj'];
+								$link = "wyszukiwarka.html" . "?szukaj=" . $szukaj;
+								header("Location: $link");
+							}
+						?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search area -->
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+            			<p>Wypisane książki o takim tytule, kategorii, autorze, wydawnictwie</p>
+						<h1>Wyszukiwarka</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- zawartosc strony -->
+
+	<div class="contact-from-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mb-5 mb-lg-0">
+					<?php
+
+					$szukaj = $_GET['szukaj'];
+
+					print '<h3 style="margin-top: -10%; margin-left: -10%;">Wyszukana fraza:</h3>';
+					print '<h4 style="margin-left: -10%;">' . $szukaj . '</h4><br><br>';
+
+					function showTable($rez)
+					{
+						print '<table style="margin-top: 0%; margin-left: -10%; width: 170%" align="center" style="border: 5px solid #006994;border-collapse:collapse;">';
+						print '<tr style="background-color:#878787";><td style="width:40px;">Id</td><td>Tytuł</td><td>Rok wydania</td><td>Ilość stron</td><td>Kategoria</td><td>Imię autora</td><td>Nazwisko autora</td><td>Wydawnictwo</td><td>Data wypożyczenia</td></tr>';
+				
+						while ($newArray = mysqli_fetch_array($rez, MYSQLI_ASSOC))
+						{
+							print '<tr>';
+							print '<td>'; echo $newArray['ID_ksiazki']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Tytul']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Rok_wydania']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Ilosc_stron']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Nazwa']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Imie']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Nazwisko']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Nazwa_wyd']; echo " "; print '</td>';
+							print '<td>'; echo $newArray['Data_wypozyczenia']; echo " "; print '</td>';
+							print '</tr>';
+						}
+						print '</table>';
+						print '<br><br><br><br><br>';
+					}
+
+					$mysqli = mysqli_connect("localhost", "root", "", "biblioteka");
+					$sql = "SELECT ksiazki.ID_ksiazki, ksiazki.Tytul, ksiazki.Rok_wydania, ksiazki.Ilosc_stron, kategorie.Nazwa,
+					autorzy.Imie, autorzy.Nazwisko, wydawnictwo.Nazwa_wyd, wypozyczenie.Data_wypozyczenia
+					FROM ksiazki 
+					INNER JOIN kategorie ON kategorie.Id_kategoria = ksiazki.Kategoria 
+					INNER JOIN autorzy ON autorzy.Id_autor = ksiazki.Autor
+					INNER JOIN wydawnictwo ON wydawnictwo.Id_wydawnictwo = ksiazki.Wydawnictwo
+					LEFT JOIN wypozyczenie ON wypozyczenie.Id_ksiazki = ksiazki.ID_ksiazki 
+					WHERE ksiazki.Tytul LIKE '%$szukaj%' OR kategorie.Nazwa LIKE '%$szukaj%' OR autorzy.Imie LIKE '%$szukaj%' OR
+					autorzy.Nazwisko LIKE '%$szukaj%' OR wydawnictwo.Nazwa_wyd LIKE '%$szukaj%'
+					ORDER BY ksiazki.Tytul ASC";
+
+					$rez = mysqli_query($mysqli, $sql);				
+					showTable($rez);
+					mysqli_free_result($rez);				
+					mysqli_close($mysqli);				
+					?>
+        		</div>
+
+       	 <div class="col-lg-4">
+          <div style="margin-left: 35%; margin-top:-20%;">
+            <?php
+				echo '<a href="index.html"><input type="submit" value="Powrót na stronę główną" /></a>';
+			?>
+          </div>
+        </div>
+      </div>
+   </div>
+
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">O nas</h2>
+						<p>Jesteśmy niewielką biblioteką, która świadczy usługi dla uczelni. Niemniej każdy, kto chce może wypozyczyć coś u nas!!</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Dane kontaktowe</h2>
+						<ul>
+							<li>aleja Adama Mickiewicza 30, 30-059 Kraków</li>
+							<li>bgagh@bg.agh.edu.pl</li>
+							<li>12 617 32 11</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Jak dojechać</h2>
+						<ul>
+							<li><a href="https://www.google.com/maps/place/Biblioteka+G%C5%82%C3%B3wna+Akademii+G%C3%B3rniczo-Hutniczej/@50.0662392,19.9197766,16.12z/data=!4m5!3m4!1s0x0:0xa3ef680588233239!8m2!3d50.065624!4d19.921496"><img src="assets/img/mapa.png" alt=""></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<p>Autor designu - <a href="https://imransdesign.com/">Imran Hossain</a>,  z moimi modyfikacjami.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end copyright -->
+	
+	<!-- jquery -->
+	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap -->
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<!-- count down -->
+	<script src="assets/js/jquery.countdown.js"></script>
+	<!-- isotope -->
+	<script src="assets/js/jquery.isotope-3.0.6.min.js"></script>
+	<!-- waypoints -->
+	<script src="assets/js/waypoints.js"></script>
+	<!-- owl carousel -->
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<!-- magnific popup -->
+	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<!-- mean menu -->
+	<script src="assets/js/jquery.meanmenu.min.js"></script>
+	<!-- sticker js -->
+	<script src="assets/js/sticker.js"></script>
+	<!-- main js -->
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>
